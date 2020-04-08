@@ -6,6 +6,8 @@
 // define constants
 #define BLINK_MAX  5
 #define BLINK_DELAY 500
+#define SWITCH_DELAY 5000
+#define YELLOW_DELAY 2000 // Yellow is usually shorter than red and green
 
 int i = 0;
 
@@ -19,25 +21,39 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+    // Red light
     digitalWrite(RED, HIGH);
     digitalWrite(YELLOW, LOW);
     digitalWrite(GREEN, LOW);
+    delay(SWITCH_DELAY);
 
-    // TODO: make red light blink before going off
-
-    delay(BLINK_DELAY);
-
+    // Yellow light
     digitalWrite(RED, LOW);
     digitalWrite(YELLOW, HIGH);
     digitalWrite(GREEN, LOW);
+    delay(YELLOW_DELAY);        
 
-    delay(BLINK_DELAY);        
-
+    // Green light
     digitalWrite(RED, LOW);
     digitalWrite(YELLOW, LOW);
     digitalWrite(GREEN, HIGH);
+    delay(SWITCH_DELAY); 
 
-    // TODO: make green ligh blink before going off
+    // Green light blinking
+    for (i=0; i<BLINK_MAX; i++) {
+      if (i % 2 == 0) {
+        digitalWrite(GREEN, LOW);
+        delay(BLINK_DELAY);
+      }
+      else {
+        digitalWrite(GREEN, HIGH);
+        delay(BLINK_DELAY);
+      }
+    }
 
-    delay(BLINK_DELAY);
+    // Back to the yellow light
+    digitalWrite(RED, LOW);
+    digitalWrite(YELLOW, HIGH);
+    digitalWrite(GREEN, LOW);
+    delay(YELLOW_DELAY);
 }
